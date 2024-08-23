@@ -1,10 +1,10 @@
 import { fn, within, userEvent, expect } from '@storybook/test';
-import qInput from './InputTextfield.vue';
+import qInput from './InputGroup.vue';
 import { QIcon, QBtn } from 'quasar';
 import { readonly, ref, watch } from 'vue';
 
 export default {
-  title: 'Forms/InputTextfield',
+  title: 'Forms/InputGroup',
   component: qInput,
   tags: ['autodocs'],
   
@@ -14,27 +14,14 @@ export default {
   // },
   
   argTypes: {
-    // javascript: {
-    //     description: 'v-model="{변수}"',
-    //     table: {
-    //       type: { summary: 'const {변수} = ref(null)' },
-    //     },
-    //     control: {
-    //       type: false,
-    //     },
-    //   },
       modelValue: {
         table:{
           disable: true,
         }
       },
-      // isLabel: {
-      //   table:{
-      //     disable: true,
-      //   }
-      // },
       clearbutton: {
         description: '값 입력됐을 경우 노출 되는 삭제 버튼',
+
         table: {
           type: { summary: '일반 아이콘: <q-btn flat icon="{아이콘 이름}" @click.stop.prevent="modelValue = null"/>, 이미지 아이콘: <q-btn flat icon="img:{아이콘 경로}" @click.stop.prevent="modelValue = null"/>' },
         },
@@ -58,44 +45,12 @@ export const Standard = {
   //     source: { type: 'code'},
   //   },
   // },
-  parameters: {
-    docs: {
-      source: {code: `
-<script setup>
-  const modelValue = ref();
-  const inputArg = ref([
-    {
-      hasTitle: true, 
-      items: [
-        {title: 'Default Type input text', disabled: false, readonly: false, required: false, autofocus: false}
-      ],
-      const isPwd = ref(false);
-    }
-  ]);
-</script>
-<template v-for="(inputItem, key) in inputArg" :key="key">
-  <q-input class="form__inputfield--standard" 
-  :class="{'form__inputfield--hastitle': inputItem.hasTitle, 'form__inputfield--required': inputItems.required}" outlined 
-  v-model="modelValue" autofocus="false" placeholder="내용 입력" 
-  :title="\${inputItems.title} 입력" :disable="inputItems.disabled" 
-  :readonly="inputItems.readonly" :required="inputItems.required" 
-  :autofocus="inputItems.autofocus" v-for="inputItems in inputItem.items" 
-  :key="inputItems.title"
-  :type="isPwd ? 'password' : 'text'"
-  >
-      <template #before v-if="inputItem.hasTitle">
-        <span class="form__inputfield--title">{{ inputItems.title }}</span>
-      </template>
-      <template v-slot:append>
-        <q-icon v-if="type=='password'" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-        <q-btn v-if="modelValue" icon="clear" @click.stop.prevent="modelValue = null" class="cursor-pointer" role="button" />
-      </template>
-  </q-input>
-</template>
-        `,
-      },
-    },
-  },
+//   parameters: {
+//     docs: {
+//       source: {code: ``,
+//       },
+//     },
+//   },
    render: (args) => ({
     components: {
       qInput, QIcon, QBtn
@@ -142,48 +97,3 @@ export const Standard = {
   },
 };
 
-export const Validation = {
- args:{
-    ...Standard.args,
-    titlevalue: 'Default Type input text',
-    rules:[ val => !!val || '* Required', val => val.length < 2 || 'Please use maximum 1 character', ],
-    noErrorIcon:true
- },
-};
-
-export const Title = {
-  args: {
-    ...Standard.args,
-    titlevalue: "Has Title",
-    hasTitle: true,
-  }
-}
-
-export const Textarea = {
-  args: {
-    ...Standard.args,
-    titlevalue: "Textarea",
-    hasTitle: true,
-    type: "textarea",
-    maxlength: "10",
-  }
-}
-// export const Secondary = {
-//   args: {
-//     label: 'Button',
-//   },
-// };
-
-// export const Large = {
-//   args: {
-//     size: 'large',
-//     label: 'Button',
-//   },
-// };
-
-// export const Small = {
-//   args: {
-//     size: 'small',
-//     label: 'Button',
-//   },
-// };

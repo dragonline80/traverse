@@ -1,0 +1,215 @@
+@use "sass:math";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+$textfield_height_default: 40;
+
+/// ************* ///
+//  Color Palette ///
+/// ************* ///
+$g_000: #fff;
+$g_300: #ebebeb;
+$g_600: #aaa;
+$g_900: #1f1f1f;
+$o_100: #ff4617;
+$o_200: #fe660d;
+$o_300: #db5100;
+
+/// ********** ///
+//  Typography ///
+/// ********** ///
+@mixin text-setup($font-size, $font-weight) {
+    font-size: $font-size;
+    font-weight: $font-weight;
+}
+$Font_weight_Thin: 100;
+$Font_weight_ExtraLight: 200;
+$Font_weight_Light: 300;
+$Font_weight_Regular: 400;
+$Font_weight_Medium: 500;
+$Font_weight_SemiBold: 600;
+$Font_weight_Bold: 700;
+$Font_weight_ExtraBold: 800;
+$Font_weight_Black: 900;
+.text-h1 {
+    @include text-setup(rem(35), $Font_weight_Bold);
+}
+.text-h2 {
+    @include text-setup(rem(20), $Font_weight_SemiBold);
+}
+.text-subtitle1 {
+    @include text-setup(rem(20), $Font_weight_Medium);
+}
+.gnb-1depth {
+    @include text-setup(rem(18), $Font_weight_Medium);
+}
+.gnb-2depth {
+    @include text-setup(rem(18), $Font_weight_Regular);
+}
+.special-button {
+    @include text-setup(rem(20), $Font_weight_Medium);
+}
+.main-button {
+    @include text-setup(rem(16), $Font_weight_Medium);
+}
+.body1 {
+    @include text-setup(rem(16), $Font_weight_Light);
+}
+.body2 {
+    @include text-setup(rem(16), $Font_weight_ExtraLight);
+}
+.tag {
+    @include text-setup(rem(14), $Font_weight_Light);
+}
+.caption {
+    @include text-setup(rem(14), $Font_weight_ExtraLight);
+}
+
+:root {
+    --q-negative: #ff0000;
+}
+@function rem($value) {
+    $remValue: math.div($value, 16); // $value를 16으로 나눔
+    @return $remValue * 1rem; // rem 단위로 반환
+}
+
+body,
+html {
+    font-family:
+        "Pretendard Variable",
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        system-ui,
+        Roboto,
+        "Helvetica Neue",
+        "Segoe UI",
+        "Apple SD Gothic Neo",
+        "Noto Sans KR",
+        "Malgun Gothic",
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        sans-serif;
+    @extend .body1;
+}
+
+.form {
+    &__inputfield {
+        &--title {
+            display: flex;
+            margin-bottom: rem(8);
+            color: #000;
+            @include text-setup(rem(16), $Font_weight_Regular);
+        }
+
+        &--hastitle {
+            flex-direction: column;
+        }
+        &--required {
+            .form__inputfield--title {
+                &::after {
+                    content: "*";
+                }
+            }
+        }
+        &--standard {
+            &.q-field {
+                font-size: rem(16);
+                &--error {
+                    .form__inputfield--title {
+                        color: var(--q-negative);
+                    }
+                }
+                .q-hoverable {
+                    padding: 0;
+                    min-height: auto;
+                    &:hover {
+                        & > .q-focus-helper {
+                            background-color: transparent;
+                        }
+                    }
+                }
+                &--outlined {
+                    &.q-field {
+                        .q-field {
+                            &__native {
+                                padding-block: 0;
+                                color: $g_900;
+                                font-weight: $Font_weight_Light;
+                                &:placeholder-shown {
+                                    color: $g_600;
+                                    font-weight: $Font_weight_ExtraLight;
+                                }
+                            }
+                            &__bottom {
+                                padding: rem(8) 0 0 0;
+                            }
+                            &__before {
+                                padding-right: 0;
+                            }
+                            &__marginal {
+                                height: 100%;
+                            }
+                            &__control {
+                                height: rem(40);
+                                padding: 0 rem(15);
+                                border-radius: rem(4);
+                                color: #6372ff;
+                                &::before {
+                                    border-color: $g_300;
+                                }
+
+                                &::after {
+                                    border-width: rem(1);
+                                }
+                            }
+                        } //default
+                        &--readonly {
+                            .q-field {
+                                &__control {
+                                    &:before {
+                                        border-style: solid;
+                                        background-color: $g_300;
+                                    }
+                                }
+
+                                &__native,
+                                &__input {
+                                    color: $g_600;
+                                }
+                            }
+                        } //readeonly
+                        &--disabled {
+                            .q-field {
+                                &__control {
+                                    &:before {
+                                        background-color: $g_300;
+                                    }
+                                }
+
+                                &__native,
+                                &__input {
+                                    color: $g_600;
+                                }
+                            }
+                        } //disabled
+                        &.q-textarea {
+                            .q-field__control {
+                                height: auto;
+                            }
+                            .q-field__native {
+                                resize: none;
+                                height: rem(287);
+                                padding-top: rem(28);
+                            }
+                        } //textarea
+                    }
+                }
+            }
+        }
+        &--maxlength {
+            .q-field__counter {
+                color: var(--q-negative);
+            }
+        }
+    }
+}
